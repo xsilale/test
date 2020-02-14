@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a8ec5158-99c4-42f7-bc8a-e0dda3ea7ba9" name="Default Changelist" comment="" />
+    <list default="true" id="a8ec5158-99c4-42f7-bc8a-e0dda3ea7ba9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/client/client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/src/chat/network/TCPConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/network/src/chat/network/TCPConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/chat/server/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/chat/server/ChatServer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +21,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1XiVMSt8t6zvltTjQvtd3kibNnU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -24,6 +34,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -54,14 +65,22 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2472" y="197" key="#Project_Structure" timestamp="1581529218241">
+    <state x="2472" y="197" key="#Project_Structure" timestamp="1581696509112">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2472" y="197" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1581529218241" />
+    <state x="2472" y="197" key="#Project_Structure/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1581696509112" />
+    <state x="2685" y="248" key="#com.intellij.ide.util.MemberChooser" timestamp="1581697280401">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2685" y="248" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1581697280401" />
     <state x="2660" y="293" key="FileChooserDialogImpl" timestamp="1581528870735">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2660" y="293" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1581528870735" />
+    <state x="2575" y="362" key="com.intellij.ide.util.TipDialog" timestamp="1581685474567">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2575" y="362" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1581685474567" />
     <state x="2263" y="159" key="new project wizard" timestamp="1581529214175">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
