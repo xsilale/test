@@ -14,6 +14,8 @@ public class ChatServer implements TCPConnectionListener {
     }
 
     private final ArrayList<TCPConnection> connections= new ArrayList<>();
+    private final ArrayList<String> nickNames= new ArrayList<>();
+    private boolean justConnected = false;
 
     private ChatServer(){
         System.out.println("Server running... ");
@@ -34,11 +36,29 @@ public class ChatServer implements TCPConnectionListener {
     public synchronized void onConnectionReady(TCPConnection tcpConnection) {
         connections.add(tcpConnection);
         sendToAllConnections("Client connected: " + tcpConnection);
+        justConnected = true;
+        //todo: print all connections
+        for (TCPConnection tcpCon:connections) {
+            System.out.println("tcpConnection" + tcpCon);
+
+        }
 
     }
 
     @Override
     public synchronized void onReceiveString(TCPConnection tcpConnection, String value) {
+        System.out.println("xsilale_server");
+        if (justConnected == true){
+            nickNames.add(value);
+            justConnected = false;
+            sendToAllConnections("forList: " + value);
+            for (String nickName:nickNames) {
+                System.out.println("nickNames: " + nickName);
+
+            }
+            return;
+        }
+
         sendToAllConnections(value);
 
     }

@@ -12,7 +12,9 @@ import java.sql.Connection;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
-    private static final String IP_ADDR = "192.168.220.53";
+    //dy
+
+    private static final String IP_ADDR = "localhost";
     private static final int PORT = 8189;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
@@ -30,6 +32,8 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
     }
 
+    private final JButton button = new JButton("connect");
+    private final JList nickList = new JList();
     private final JTextArea log = new JTextArea();
     private final JTextField fieldNickname = new JTextField("xsilale");
     private final JTextField fieldInput = new JTextField();
@@ -47,19 +51,43 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         log.setLineWrap(true);
         add(log, BorderLayout.CENTER);
 
+        add(nickList, BorderLayout.EAST);
+        //button.addActionListener(this);
+        nickList.setVisible(false);
+
+        add(button, BorderLayout.EAST);
+        button.addActionListener(this);
+
         fieldInput.addActionListener(this);
         add(fieldNickname, BorderLayout.NORTH);
         add(fieldInput, BorderLayout.SOUTH);
-        try {
+      /*  try {
             connection = new TCPConnection(this, IP_ADDR,PORT);
         } catch (IOException e) {
             printMsg("Connection exception... " + e);
-        }
+        }*/
 
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+
+        if (actionEvent.getSource()== button){
+
+            try {
+                connection = new TCPConnection(this, IP_ADDR,PORT);
+            } catch (IOException e) {
+                printMsg("Connection exception... " + e);
+            }
+
+            String msg = fieldNickname.getText();
+            if (msg.equals("")) return;
+            connection.sendString(msg);
+            button.setVisible(false);
+            fieldNickname.setEnabled(false);
+            nickList.setVisible(true);
+
+        }
         String msg = fieldInput.getText();
         if (msg.equals("")) return;
         fieldInput.setText(null);
@@ -75,7 +103,13 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
     @Override
     public void onReceiveString(TCPConnection tcpConnection, String value) {
+        System.out.println("xsilale_client");
+        if(value.matches("forList:*")){
+
+
+        }
         printMsg(value);
+
 
     }
 
