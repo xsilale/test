@@ -51,7 +51,9 @@ public class ChatServer implements TCPConnectionListener {
         if (justConnected == true){
             nickNames.add(value);
             justConnected = false;
-            sendToAllConnections("forList: " + value);
+            for (String nickName:nickNames) {
+                sendToAllConnections("NickName Data: " + nickName);
+            }
             for (String nickName:nickNames) {
                 System.out.println("nickNames: " + nickName);
 

@@ -33,7 +33,9 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     }
 
     private final JButton button = new JButton("connect");
-    private final JList nickList = new JList();
+    private final DefaultListModel listModel= new DefaultListModel();
+    private final JList nickList = new JList(listModel);
+    private final JScrollPane pane = new JScrollPane(nickList);
     private final JTextArea log = new JTextArea();
     private final JTextField fieldNickname = new JTextField("xsilale");
     private final JTextField fieldInput = new JTextField();
@@ -51,7 +53,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         log.setLineWrap(true);
         add(log, BorderLayout.CENTER);
 
-        add(nickList, BorderLayout.EAST);
+        add(nickList, BorderLayout.WEST);
         //button.addActionListener(this);
         nickList.setVisible(false);
 
@@ -104,9 +106,21 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     @Override
     public void onReceiveString(TCPConnection tcpConnection, String value) {
         System.out.println("xsilale_client");
-        if(value.matches("forList:*")){
+        if(value.startsWith("NickName Data: ")){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    String[] lines = value.split(" ");
 
+                    /*for (String line:lines) {
+                        System.out.println("xsilale check: " + line);
 
+                    }*/
+
+                    listModel.addElement(lines[2]);
+
+                }
+            });
         }
         printMsg(value);
 
