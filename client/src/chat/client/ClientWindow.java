@@ -37,6 +37,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     private final JList nickList = new JList(listModel);
     private final JScrollPane pane = new JScrollPane(nickList);
     private final JTextArea log = new JTextArea();
+    private final JScrollPane scroll = new JScrollPane();
     private final JTextField fieldNickname = new JTextField("xsilale");
     private final JTextField fieldInput = new JTextField();
 
@@ -49,9 +50,14 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         setAlwaysOnTop(true);
         setVisible(true);
 
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
         log.setEditable(false);
         log.setLineWrap(true);
         add(log, BorderLayout.CENTER);
+
+        scroll.getViewport().add(log);
+        add(scroll);
 
         add(nickList, BorderLayout.WEST);
         //button.addActionListener(this);
@@ -104,27 +110,24 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     }
 
     @Override
-    public void onReceiveString(TCPConnection tcpConnection, String value) {
-        System.out.println("xsilale_client");
-        if(value.startsWith("NickName Data: ")){
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    String[] lines = value.split(" ");
+    public synchronized void onReceiveString(TCPConnection tcpConnection, String value) {
+        System.out.println("xsilale_client: "  + value);
+        printMsg("xsilale1 " + value);
 
-                    /*for (String line:lines) {
-                        System.out.println("xsilale check: " + line);
-
-                    }*/
-
-                    listModel.addElement(lines[2]);
-
-                }
-            });
+        if (value.equals("Refresh NickName Data")) {
+            deleteAllItemsFormList();
+            printMsg("xsilale_del " + value);
         }
-        printMsg(value);
 
+        if (value.startsWith("NickName Data: ")) {
+            printMsg("xsilale2 " + value);
+            String[] lines = value.split(" ");
 
+            addItemToList(lines[2]);
+            printMsg("xsilale3 " + lines[2]);
+            return;
+        }
+        //printMsg(value);
     }
 
     @Override
@@ -148,4 +151,33 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
             }
         });
     }
+
+    private synchronized void deleteAllItemsFormList (){
+
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                int size = listModel.getSize();
+                printMsg("deleteAllItemsFormList size " + size);
+                for (int i = 0; i < size; i++) {
+                    printMsg("deleteAllItemsFormList deleted: " + listModel.get(i));
+                    listModel.remove(i);
+                }
+            }
+        });
+    }
+
+    private  synchronized void addItemToList (String value){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                listModel.addElement(value);
+            }
+        });
+
+
+
+    }
+
 }

@@ -35,14 +35,14 @@ public class ChatServer implements TCPConnectionListener {
     @Override
     public synchronized void onConnectionReady(TCPConnection tcpConnection) {
         connections.add(tcpConnection);
-        sendToAllConnections("Client connected: " + tcpConnection);
+        //sendToAllConnections("Client connected: " + tcpConnection);
         justConnected = true;
         //todo: print all connections
-        for (TCPConnection tcpCon:connections) {
+        /*for (TCPConnection tcpCon:connections) {
             System.out.println("tcpConnection" + tcpCon);
 
         }
-
+        */
     }
 
     @Override
@@ -51,6 +51,7 @@ public class ChatServer implements TCPConnectionListener {
         if (justConnected == true){
             nickNames.add(value);
             justConnected = false;
+            sendToAllConnections("Refresh NickName Data");
             for (String nickName:nickNames) {
                 sendToAllConnections("NickName Data: " + nickName);
             }
@@ -67,8 +68,16 @@ public class ChatServer implements TCPConnectionListener {
 
     @Override
     public synchronized void OnDisconnect(TCPConnection tcpConnection) {
+
+        int i = connections.indexOf(tcpConnection);
+        nickNames.remove(i);
         connections.remove(tcpConnection);
+
         sendToAllConnections("Client disconnected: " + tcpConnection);
+        sendToAllConnections("Refresh NickName Data");
+        for (String nickName:nickNames) {
+            sendToAllConnections("NickName Data: " + nickName);
+        }
 
     }
 
@@ -79,7 +88,7 @@ public class ChatServer implements TCPConnectionListener {
     }
 
     private void sendToAllConnections(String value){
-        System.out.println(value);
+        System.out.println("Send to clients: " + value);
         final int cnt = connections.size();
         for(int i = 0; i < cnt; i++){
             connections.get(i).sendString(value);
