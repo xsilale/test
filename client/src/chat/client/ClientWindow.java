@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
@@ -18,6 +20,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     private static final int PORT = 8189;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
+    private final ArrayList<String> nickNames = new ArrayList<>();
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -114,17 +117,31 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         System.out.println("xsilale_client: "  + value);
         printMsg("xsilale1 " + value);
 
-        if (value.equals("Refresh NickName Data")) {
+        if (value.equals("Start Refresh NickName Data")) {
+
+            //Iterator<String > itr = nickNames.iterator();
+           /* while(itr.hasNext())
+            {
+                itr.remove();
+            }
+            */
+            nickNames.clear();
             deleteAllItemsFormList();
             printMsg("xsilale_del " + value);
+            return;
         }
 
         if (value.startsWith("NickName Data: ")) {
             printMsg("xsilale2 " + value);
             String[] lines = value.split(" ");
 
-            addItemToList(lines[2]);
+            nickNames.add(lines[2]);
             printMsg("xsilale3 " + lines[2]);
+            return;
+        }
+
+        if (value.equals("Finish Refresh NickName Data")) {
+            addItemToList(nickNames);
             return;
         }
         //printMsg(value);
@@ -154,25 +171,29 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
     private synchronized void deleteAllItemsFormList (){
 
+        //int size = listModel.getSize();
+        listModel.clear();
+        printMsg("deleteAllItemsFormList size ");
+        /*for (int i = 0; i < size; i++) {
+            printMsg("deleteAllItemsFormList deleted: " + listModel.get(i));
+            listModel.clear();
+        }*/
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                int size = listModel.getSize();
-                printMsg("deleteAllItemsFormList size " + size);
-                for (int i = 0; i < size; i++) {
-                    printMsg("deleteAllItemsFormList deleted: " + listModel.get(i));
-                    listModel.remove(i);
-                }
-            }
-        });
+
     }
 
-    private  synchronized void addItemToList (String value){
+    private  synchronized void addItemToList (ArrayList<String> nickNameList){
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                listModel.addElement(value);
+
+                for (String nickName : nickNameList) {
+
+                    listModel.addElement(nickName);
+
+                }
+
             }
         });
 

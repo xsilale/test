@@ -51,7 +51,7 @@ public class ChatServer implements TCPConnectionListener {
         if (justConnected == true){
             nickNames.add(value);
             justConnected = false;
-            sendToAllConnections("Refresh NickName Data");
+            sendToAllConnections("Start Refresh NickName Data");
             for (String nickName:nickNames) {
                 sendToAllConnections("NickName Data: " + nickName);
             }
@@ -59,6 +59,7 @@ public class ChatServer implements TCPConnectionListener {
                 System.out.println("nickNames: " + nickName);
 
             }
+            sendToAllConnections("Finish Refresh NickName Data");
             return;
         }
 
@@ -74,11 +75,11 @@ public class ChatServer implements TCPConnectionListener {
         connections.remove(tcpConnection);
 
         sendToAllConnections("Client disconnected: " + tcpConnection);
-        sendToAllConnections("Refresh NickName Data");
+        sendToAllConnections("Start Refresh NickName Data");
         for (String nickName:nickNames) {
             sendToAllConnections("NickName Data: " + nickName);
         }
-
+        sendToAllConnections("Finish Refresh NickName Data");
     }
 
     @Override
