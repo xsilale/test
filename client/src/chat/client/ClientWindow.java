@@ -4,13 +4,16 @@ import chat.network.TCPConnection;
 import chat.network.TCPConnectionListener;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 public class ClientWindow extends JFrame implements ActionListener, TCPConnectionListener {
 
@@ -65,6 +68,25 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
         add(nickList, BorderLayout.WEST);
         //button.addActionListener(this);
         nickList.setVisible(false);
+        nickList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        nickList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selected = ((JList<?>)e.getSource()).getSelectedIndex();
+
+            }
+        });
+        nickList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+               if(e.getClickCount() == 2) {
+
+                   //String selected = nickList.getSelectedValue();
+                  // printMsg("Connection exception... " + selected);
+
+               }
+            }
+        });
 
         add(button, BorderLayout.EAST);
         button.addActionListener(this);
@@ -99,6 +121,8 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
             nickList.setVisible(true);
 
         }
+
+        //if (nickList.lis)
         String msg = fieldInput.getText();
         if (msg.equals("")) return;
         fieldInput.setText(null);
@@ -114,8 +138,8 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
     @Override
     public synchronized void onReceiveString(TCPConnection tcpConnection, String value) {
-        System.out.println("xsilale_client: "  + value);
-        printMsg("xsilale1 " + value);
+        //System.out.println("xsilale_client: "  + value);
+       // printMsg("xsilale1 " + value);
 
         if (value.equals("Start Refresh NickName Data")) {
 
@@ -127,16 +151,16 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
             */
             nickNames.clear();
             deleteAllItemsFormList();
-            printMsg("xsilale_del " + value);
+            //printMsg("xsilale_del " + value);
             return;
         }
 
         if (value.startsWith("NickName Data: ")) {
-            printMsg("xsilale2 " + value);
+            //printMsg("xsilale2 " + value);
             String[] lines = value.split(" ");
 
             nickNames.add(lines[2]);
-            printMsg("xsilale3 " + lines[2]);
+            //printMsg("xsilale3 " + lines[2]);
             return;
         }
 
@@ -144,7 +168,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
             addItemToList(nickNames);
             return;
         }
-        //printMsg(value);
+        printMsg(value);
     }
 
     @Override
@@ -173,7 +197,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
         //int size = listModel.getSize();
         listModel.clear();
-        printMsg("deleteAllItemsFormList size ");
+       // printMsg("deleteAllItemsFormList size ");
         /*for (int i = 0; i < size; i++) {
             printMsg("deleteAllItemsFormList deleted: " + listModel.get(i));
             listModel.clear();
@@ -196,8 +220,6 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
 
             }
         });
-
-
 
     }
 

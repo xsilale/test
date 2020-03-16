@@ -47,8 +47,9 @@ public class ChatServer implements TCPConnectionListener {
 
     @Override
     public synchronized void onReceiveString(TCPConnection tcpConnection, String value) {
-        System.out.println("xsilale_server");
+        //System.out.println("xsilale_server");
         if (justConnected == true){
+            sendToAllConnections(value +" connected to chat");
             nickNames.add(value);
             justConnected = false;
             sendToAllConnections("Start Refresh NickName Data");
@@ -71,10 +72,11 @@ public class ChatServer implements TCPConnectionListener {
     public synchronized void OnDisconnect(TCPConnection tcpConnection) {
 
         int i = connections.indexOf(tcpConnection);
+        sendToAllConnections(nickNames.get(i) + " left the chat");
         nickNames.remove(i);
         connections.remove(tcpConnection);
 
-        sendToAllConnections("Client disconnected: " + tcpConnection);
+        //sendToAllConnections("Client disconnected: " + tcpConnection);
         sendToAllConnections("Start Refresh NickName Data");
         for (String nickName:nickNames) {
             sendToAllConnections("NickName Data: " + nickName);
