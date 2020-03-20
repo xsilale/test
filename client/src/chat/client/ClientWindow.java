@@ -81,8 +81,9 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
             public void mouseClicked(MouseEvent e) {
                if(e.getClickCount() == 2) {
 
-                   //String selected = nickList.getSelectedValue();
-                  // printMsg("Connection exception... " + selected);
+                   String selected = (String) nickList.getSelectedValue();
+                   printMsg("test " + selected);
+                   fieldInput.setText(selected + ":");
 
                }
             }
